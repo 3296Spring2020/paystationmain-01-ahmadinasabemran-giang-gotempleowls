@@ -1,5 +1,8 @@
+package paystation.domain;
+import java.util.*;
+
 /**
- * The business logic of a Parking Pay Station.
+ * Implementation of the pay station.
  *
  * Responsibilities:
  *
@@ -17,55 +20,149 @@
  * implied. You may study, use, modify, and distribute it for non-commercial
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
+public class PayStation{
 
-package paystation.domain;
-import java.util.*;
+    private int insertedSoFar = 0;
+    private int timeBought = 0;
+    private Map coinMap = new HashMap();
+    private boolean nickleBool = false;
+    private boolean dimeBool = false;
+    private boolean quarterBool = false;
+    private int value = 0;
+    private int moneyInserted = 0;
+    private int time = 0;
+    private String dayOfTheWeek;
+    private String[] WeekDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+    private String[] Weekend = {"Saturday", "Sunday"};
 
-public interface PayStation {
+    public PayStation() {}
 
-    /**
-     * Insert coin into the pay station and adjust state accordingly.
-     *
-     * @param coinValue is an integer value representing the coin in cent. That
-     * is, a quarter is coinValue=25, etc.
-     * @throws IllegalCoinException in case coinValue is not a valid coin value
-     */
-    public void addPayment(int coinValue) throws IllegalCoinException;
+    public PayStation(int timeBought) {
+        this.timeBought = timeBought;
+    }
 
-    /**
-     * Read the machine's display. The display shows a numerical description of
-     * the amount of parking time accumulated so far based on inserted payment.
-     *
-     * @return the number to display on the pay station display
-     */
-    public int readDisplay();
+    public PayStation (String dayOfTheWeek, int moneyInserted) {
+        this.dayOfTheWeek = dayOfTheWeek;
+        this.moneyInserted = moneyInserted;
+    }
 
-    /**
-     * Buy parking time. Terminate the ongoing transaction and return a parking
-     * receipt. A non-null object is always returned.
-     *
-     * @return a valid parking receipt object.
-     */
-    public Receipt buy();
+    public void addPayment(int coinValue)
+            throws IllegalCoinException {
 
-    /** Cancel the present transaction. Resets the paystation for a 
-    * new transaction. 
-    * @return A Map defining the coins returned to the user. 
-    * The key is the coin type and the associated value is the 
-    * number of these coins that are returned. 
-    * The Map object is never null even if no coins are returned. 
-    * The Map will only contain only keys for coins to be returned. 
-    * The Map will be cleared after a cancel or buy. 
-    */ 
+        switch (coinValue) {
+            case 5:
+                if (!nickleBool) {
+                    coinMap.put(1, 1);
+                    nickleBool = true;
+                } else {
+                    coinMap.put(1, (int) coinMap.get(1) + 1);
 
-    public Map<Integer, Integer> cancel();
-    
-    /**
-     * Reset money collected. Sets the amount of money collected by the machine
-     * since the last call to 0.
-     * 
-     * @return total amount of money collected by the machine since last
-     * call.
-     */
-    public int empty();
+                }
+                break;
+            case 10:
+                if (!dimeBool) {
+                    coinMap.put(2, 1);
+                    dimeBool = true;
+                } else {
+                    coinMap.put(2, (int) coinMap.get(2) + 1);
+                }
+                break;
+            case 25:
+                if (!quarterBool) {
+                    coinMap.put(3, 1);
+                    quarterBool = true;
+                } else {
+                    coinMap.put(3, (int) coinMap.get(3) + 1);
+                }
+                break;
+            default:
+                throw new IllegalCoinException("Invalid coin: " + coinValue);
+        }
+        insertedSoFar += coinValue;
+        timeBought = insertedSoFar / 5 * 2;
+    }
+
+    public int readDisplay() {
+        return timeBought;
+    }
+
+    public PayStation buy() {
+        PayStation r = new PayStation(timeBought);
+        reset();
+        return r;
+    }
+
+    public Map<Integer, Integer> cancel() {
+        Map tempMap = new HashMap();
+        tempMap.putAll(coinMap);
+        reset();
+        return tempMap;
+    }
+
+    private void reset() {
+        timeBought = insertedSoFar = 0;
+        nickleBool = false;
+        dimeBool = false;
+        quarterBool = false;
+        coinMap.clear();
+    }
+
+    public int empty() {
+        int total = insertedSoFar;
+        insertedSoFar = 0;
+        return total;
+    }
+
+    public int value() {
+        return value;
+    }
+
+    public int calculateTimeUsingAlternatingRateStrategy(int moneyInserted) {
+
+        for(int i = 0; i < WeekDays.length; i++) {
+            if(WeekDays[i] == dayOfTheWeek) {
+                time = ((moneyInserted * 2) / 5);
+            }
+        }
+
+        for(int i = 0; i < Weekend.length; i++) {
+            if(Weekend[i] == dayOfTheWeek) {
+                if(moneyInserted < 150) {
+                    time = ((moneyInserted * 2) / 5);
+                }
+                if((150 <= moneyInserted) && (moneyInserted < 350)) {
+                    time = (((moneyInserted - 150) * (3 / 10)) + 60);
+                }
+                if(moneyInserted >= 350) {
+                    time = (((moneyInserted - 350) / 5) + 120);
+                }
+            }
+        }
+
+        return time;
+    }
+
+    public int calculateTimeUsingLinearRateStrategy(int moneyInserted) {
+
+        time = ((moneyInserted * 2) / 5);
+
+        return time;
+    }
+
+    public int calculateTimeUsingProgressiveRateStrategy(int moneyInserted) {
+
+        if(moneyInserted < 150) {
+            time = ((moneyInserted * 2) / 5);
+        }
+        if((150 <= moneyInserted) && (moneyInserted < 350)) {
+            time = (((moneyInserted - 150) * (3 / 10)) + 60);
+        }
+        if(moneyInserted >= 350) {
+            time = (((moneyInserted - 350) / 5) + 120);
+        }
+
+        return time;
+    }
 }
+
+
