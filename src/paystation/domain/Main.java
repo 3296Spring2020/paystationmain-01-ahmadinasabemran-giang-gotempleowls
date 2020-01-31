@@ -64,7 +64,9 @@ public class Main {
     }
     
     public static void main(String[] args) throws IllegalCoinException{
-        
+
+	System.out.println("Hello, World!\n");
+	
         //Allow the user to select a function
         //Deposit Coins
         //Display
