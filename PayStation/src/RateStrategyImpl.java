@@ -24,7 +24,7 @@ public class RateStrategyImpl implements RateStrategy {
     @Override
     public int calculateTimeLinearRateStrategy(int moneyInserted) {
 
-        time = ((moneyInserted * 2) / 5);
+        time = (moneyInserted * 2) / 5;
 
         return time;
     }
@@ -33,13 +33,13 @@ public class RateStrategyImpl implements RateStrategy {
     public int calculateTimeProgressiveRateStrategy(int moneyInserted) {
 
         if(moneyInserted < 150) {
-            time = ((moneyInserted * 2) / 5);
+            time = (moneyInserted * 2) / 5;
         }
         if((150 <= moneyInserted) && (moneyInserted < 350)) {
-            time = (((moneyInserted - 150) * (3 / 10)) + 60);
+            time = (moneyInserted - 150) * (3 / 10) + 60;
         }
         if(moneyInserted >= 350) {
-            time = (((moneyInserted - 350) / 5) + 120);
+            time = (moneyInserted - 350) / 5 + 120;
         }
 
         return time;
@@ -50,20 +50,20 @@ public class RateStrategyImpl implements RateStrategy {
 
         for(int i = 0; i < WeekDays.length; i++) {
             if(WeekDays[i] == dayOfTheWeek) {
-                time = ((moneyInserted * 2) / 5);
+                time = (moneyInserted * 2) / 5;
             }
         }
 
         for(int i = 0; i < Weekend.length; i++) {
             if(Weekend[i] == dayOfTheWeek) {
                 if(moneyInserted < 150) {
-                    time = ((moneyInserted * 2) / 5);
+                    time = (moneyInserted * 2) / 5;
                 }
                 if((150 <= moneyInserted) && (moneyInserted < 350)) {
-                    time = (((moneyInserted - 150) * (3 / 10)) + 60);
+                    time = (moneyInserted - 150) * (3 / 10) + 60;
                 }
                 if(moneyInserted >= 350) {
-                    time = (((moneyInserted - 350) / 5) + 120);
+                    time = (moneyInserted - 350) / 5 + 120;
                 }
             }
         }
