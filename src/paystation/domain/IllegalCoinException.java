@@ -1,6 +1,5 @@
 /**
- * Implementation of Receipt.
- *
+ * Exception representing illegal coin entry.
  *
  * This source code is from the book "Flexible, Reliable Software: Using
  * Patterns and Agile Development" published 2010 by CRC Press. Author: Henrik B
@@ -10,18 +9,11 @@
  * implied. You may study, use, modify, and distribute it for non-commercial
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
-package edu.temple.cis.paystation;
+package paystation.domain;
 
-public class ReceiptImpl implements Receipt {
+public class IllegalCoinException extends Exception {
 
-    private int value;
-
-    public ReceiptImpl(int value) {
-        this.value = value;
-    }
-
-    @Override
-    public int value() {
-        return value;
+    public IllegalCoinException(String e) {
+        super(e);
     }
 }

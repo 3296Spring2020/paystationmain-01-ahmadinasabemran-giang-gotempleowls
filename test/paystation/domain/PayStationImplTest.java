@@ -9,19 +9,35 @@
  * implied. You may study, use, modify, and distribute it for non-commercial
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
-package edu.temple.cis.paystation;
+package paystation.domain;
 
+import java.util.*;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 public class PayStationImplTest {
 
     PayStation ps;
 
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
+
     @Before
     public void setup() {
         ps = new PayStationImpl();
+    }
+
+    @After
+    public void tearDown() throws Exception {
     }
 
     /**
@@ -137,59 +153,151 @@ public class PayStationImplTest {
         ps.addPayment(25);
         assertEquals("Insert after cancel should work",
                 10, ps.readDisplay());
+    }
+
+
+
+
+
+
+    
+    
+    /**
+     * Verify that the canceled entry does not add to the amount returned by
+     * empty.
+     * @throws Exception 
+     */
+    @Test
+    public void cancelShouldNotAddToEmpty() throws Exception
+    {
+        PayStationImpl instance = new PayStationImpl();
+        int amountAdded = 25;
+        instance.addPayment(amountAdded);
+        instance.cancel();
+        instance.addPayment(amountAdded);
+        int result = instance.empty();
+        assertEquals(amountAdded, result);
         
     }
     
     /**
-     * TEST 1 OF LAB:
-     * Verify that empty returns total amount entered
+     * Very that the empty method resets the total to zero.
+     * @throws Exception 
      */
     @Test
-    public void shouldReturnTotalAmountEntered()
-    		throws IllegalCoinException {
-    	ps.addPayment(10);
-    	assertEquals("Empty should return the total amount entered",
-                10, ps.empty());
-    	/*
-        ps.addPayment(25);
-    	assertEquals("Insert after empty2 should work",
-    			14, ps.readDisplay());
-        */
+    public void testEmptyZero() throws Exception
+    {
+        PayStationImpl instance = new PayStationImpl();
+        int amountAdded = 10;
+        instance.addPayment(amountAdded);
+        instance.empty();
+        int result = instance.empty();
+        assertEquals(0, result);
     }
     
+    /**
+     * Verify that cancel returns a map with the correct amount of coins for one
+     * coin type.
+     * @throws Exception 
+     */
     @Test
-    public void shouldResetTotalToZeroAfterEmpty()
-    		throws IllegalCoinException {
-    	ps.addPayment(10);
-    	ps.empty1();
-    	assertEquals("Empty1 should reset the total to 0",
-    			0, ps.empty1());
-    	ps.addPayment(25);
-    	assertEquals("Insert after empty1 should work",
-    			10, ps.readDisplay());
+    public void test1CoinMapReturn() throws Exception
+    {
+        PayStationImpl instance = new PayStationImpl();
+        int amountAdded = 25;
+        instance.addPayment(amountAdded);
+        int result = instance.cancel().get(3);
+        assertEquals(1, result);
     }
     
+    /**
+     * Verify that cancel returns a map with the correct amount of coins for
+     * all coin types.
+     * @throws Exception 
+     */
     @Test
-    public void shouldReturnTheTotalUnchangedAmountAfterTheCallToCancel()
-    		throws IllegalCoinException {
-    	ps.addPayment(10);
-    	ps.cancel1();
-    	assertEquals("Should return the total unchanged amount after call to cancel1",
-    			4, ps.readDisplay());
-    	ps.addPayment(25);
-    	assertEquals("Insert after cancel1 should work",
-    			14, ps.readDisplay());
+    public void testNoCoinMapReturn() throws Exception
+    {
+        PayStationImpl instance = new PayStationImpl();
+        int quarter = 25;
+        int dime = 10;
+        int nickle = 5;
+        //instance.addPayment(quarter);
+        instance.addPayment(dime);
+        instance.addPayment(dime);
+        instance.addPayment(nickle);
+        Map answer = new HashMap();
+        //answer.put(1, 1);
+        answer.put(2, 2);
+        answer.put(1, 1);
+        Map result = instance.cancel();
+        assertEquals(answer, result);
     }
     
+    /**
+     * Verify that cancel returns a map without keys when no coins are entered.
+     * @throws Exception 
+     */
     @Test
-    public void shouldResetTheTotalAfterEmpty()
-    		throws IllegalCoinException{
-    	ps.addPayment(25);
-    	ps.empty();
-    	assertEquals("Empty should reset the total to 0",
-        		0, ps.empty());
-    	ps.addPayment(25);
-    	assertEquals("Insert after empty should work",
-    			10, ps.readDisplay());    	
+    public void testMultipleCoinMapReturn() throws Exception
+    {
+        PayStationImpl instance = new PayStationImpl();
+        int quarter = 25;
+        int dime = 10;
+        int nickle = 5;
+        instance.addPayment(dime);
+        instance.addPayment(dime);
+        instance.addPayment(quarter);
+        instance.addPayment(nickle);
+        Map answer = new HashMap();
+        answer.put(1, 1);
+        answer.put(2, 2);
+        answer.put(3, 1);
+        Map result = instance.cancel();
+        assertEquals(answer, result);
     }
+ 
+    /**
+     * Verify that cancel clears the map.
+     * @throws Exception 
+     */
+    @Test
+    public void testCancelClearMap() throws Exception
+    {
+        PayStationImpl instance = new PayStationImpl();
+        int quarter = 25;
+        int dime = 10;
+        int nickle = 5;
+        instance.addPayment(quarter);
+        instance.addPayment(nickle);
+        instance.addPayment(dime);
+        instance.addPayment(quarter);
+        instance.cancel();
+        Map result = instance.cancel();
+        Map emptyMap = new HashMap();
+        assertEquals(emptyMap, result);
+    }
+    
+    /**
+     * Verify that buy clears the map.
+     * @throws Exception 
+     */
+    @Test
+    public void testBuyClearMap() throws Exception
+    {
+        PayStationImpl instance = new PayStationImpl();
+        int quarter = 25;
+        int dime = 10;
+        int nickle = 5;
+        instance.addPayment(quarter);
+        instance.addPayment(nickle);
+        instance.addPayment(dime);
+        instance.addPayment(quarter);
+        instance.buy();
+        Map result = instance.cancel();
+        Map emptyMap = new HashMap();
+        assertEquals(emptyMap, result);
+    }
+    
+    
 }
