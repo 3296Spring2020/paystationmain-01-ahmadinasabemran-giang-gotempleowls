@@ -6,10 +6,9 @@ public class RateStrategyImpl implements RateStrategy {
     private String[] WeekDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
     private String[] Weekend = {"Saturday", "Sunday"};
 
-    public RateStrategyImpl (String dayOfTheWeek, int moneyInserted) {
+    public RateStrategyImpl (String dayOfTheWeek) {
         if((moneyInserted >= 0) && (dayOfTheWeek != null)) {
             this.dayOfTheWeek = dayOfTheWeek;
-            this.moneyInserted = moneyInserted;
         }
 
         if(moneyInserted < 0) {
