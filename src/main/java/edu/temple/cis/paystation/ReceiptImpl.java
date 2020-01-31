@@ -10,6 +10,7 @@
  * implied. You may study, use, modify, and distribute it for non-commercial
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
+package edu.temple.cis.paystation;
 
 public class ReceiptImpl implements Receipt {
 

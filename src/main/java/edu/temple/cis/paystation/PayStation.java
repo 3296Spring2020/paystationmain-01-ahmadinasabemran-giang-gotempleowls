@@ -17,7 +17,7 @@
  * implied. You may study, use, modify, and distribute it for non-commercial
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
-
+package edu.temple.cis.paystation;
 import java.util.*;
 
 public interface PayStation {
@@ -31,6 +31,7 @@ public interface PayStation {
      */
     public void addPayment(int coinValue) throws IllegalCoinException;
 
+    
     /**
      * Read the machine's display. The display shows a numerical description of
      * the amount of parking time accumulated so far based on inserted payment.
@@ -53,18 +54,24 @@ public interface PayStation {
     * The key is the coin type and the associated value is the 
     * number of these coins that are returned. 
     * The Map object is never null even if no coins are returned. 
-    * The Map will only contain only keys for coins to be returned. 
+    * The Map will only contain only keys for coins to be returned. (If you enter two dimes and a nickle, you should get back two dimes and a nickle, not a quarter.)
     * The Map will be cleared after a cancel or buy. 
-    */ 
-
-    public Map<Integer, Integer> cancel();
+    */
+    Map<Integer, Integer> cancel();
     
-    /**
-     * Reset money collected. Sets the amount of money collected by the machine
-     * since the last call to 0.
-     * 
-     * @return total amount of money collected by the machine since last
-     * call.
-     */
+<<<<<<< HEAD
+    public int empty1();
+=======
     public int empty();
+    
+    public int empty1();
+    
+    public int empty2();
+    
+    public int empty3();
+    
+    public void cancel1();
+    
+    //Map<Integer, Integer> cancel2();
+>>>>>>> 9266973e2e21ef61372ba9d4bc26f14e8db195fe
 }
