@@ -16,6 +16,7 @@ public class RateStrategyImpl implements RateStrategy {
 
         if((moneyInserted < 0) && (dayOfTheWeek == null)) {
             System.out.println("moneyInserted is less than 0 and needs to be greater than 0");
+            System.out.println("dayOfTheWeek can not be an empty string");
         }
     }
 
