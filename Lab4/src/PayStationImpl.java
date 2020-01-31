@@ -1,4 +1,3 @@
-package paystation.domain;
 import java.util.*;
 
 /**

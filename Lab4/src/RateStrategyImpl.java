@@ -1,5 +1,3 @@
-package paystation.domain;
-
 public class RateStrategyImpl implements RateStrategy {
 
     private String dayOfTheWeek;
@@ -14,8 +12,11 @@ public class RateStrategyImpl implements RateStrategy {
             this.moneyInserted = moneyInserted;
         }
 
-        if((moneyInserted < 0) && (dayOfTheWeek == null)) {
+        if(moneyInserted < 0) {
             System.out.println("moneyInserted is less than 0 and needs to be greater than 0");
+        }
+
+        if(dayOfTheWeek == null) {
             System.out.println("dayOfTheWeek can not be an empty string");
         }
     }

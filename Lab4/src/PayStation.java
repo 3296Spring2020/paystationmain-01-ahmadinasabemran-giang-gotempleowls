@@ -18,7 +18,6 @@
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
 
-package paystation.domain;
 import java.util.*;
 
 public interface PayStation {
