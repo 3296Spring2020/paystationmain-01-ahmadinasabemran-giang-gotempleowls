@@ -29,6 +29,11 @@ public class Main {
     private static PayStationImpl ps;
     private static Menu ms;
     
+    //int related to the RateStrategy being used
+    //Depending on the value here, use a different timeCalculate method
+    //Can be edited through changeRateStrategy()
+    private int currentRate = 1;
+    
     public void setup(){
         ps = new PayStationImpl();
         ms = new Menu();
@@ -50,15 +55,23 @@ public class Main {
     //Calls the corresponding method in PayStationImpl
     //Print the receipt
     public void buyTicket(){
+        //Receipt has a single value for timeBought
         Receipt r = ps.buy();
-        //return;
+        
     }
     
     //Calls the corresponding method in PayStationImpl
     //Prints the total returned coin value
     //Prints number of each coin
     public void cancel(){
-    
+        //Hold is a copy of the PayStation coinMap
+        //Maps from coin type to number of coins
+        Map<Integer,Integer> hold = ps.cancel();
+        int nickels = 0;
+        int dimes = 0;
+        int quarters = 0;
+        int totalRet = nickels + dimes + quarters;
+        
     }
     
     //Changes the rate strategy
