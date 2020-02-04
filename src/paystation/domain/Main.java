@@ -8,9 +8,11 @@ package paystation.domain;
 import java.util.*;
 
 
+
 /**
  *
  * @author Steven Giang
+
  * Created: 2020 1 28 Tuesday
  * CIS 3296: Software Design
  * Professor: Dominic Letarte
@@ -20,6 +22,7 @@ import java.util.*;
  * Demonstrates the functionalities of the PayStation through a menu
  * 
  */
+
 public class Main {
 
     
