@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class PayStationImpl implements PayStation, RateStrategy {
+public class PayStationImpl implements PayStation {
 
     private int insertedSoFar;
     private int timeBought;
@@ -106,5 +106,5 @@ public class PayStationImpl implements PayStation, RateStrategy {
         return total;
 
     }
-    
+
 }
