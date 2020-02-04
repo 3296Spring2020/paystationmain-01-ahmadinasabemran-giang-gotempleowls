@@ -36,18 +36,21 @@ public class Main {
     
     //Accept coins for payment
     //Can accept 5, 10, 25 coins
-    public void depositCoins(int coin){
-        
+    public void depositCoins(int coin) throws IllegalCoinException{
+        ps.addPayment(coin);
     }
     
     //Displays the current amount of time bought
     public int display(){
-        return -1;
+        int timeBought = ps.readDisplay();
+        System.out.println(timeBought + " minutes bought");
+        return timeBought;
     }
     
     //Calls the corresponding method in PayStationImpl
     //Print the receipt
     public void buyTicket(){
+        Receipt r = ps.buy();
         //return;
     }
     
