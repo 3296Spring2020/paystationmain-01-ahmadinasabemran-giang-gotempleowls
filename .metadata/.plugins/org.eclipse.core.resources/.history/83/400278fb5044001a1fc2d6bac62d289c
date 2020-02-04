@@ -1,0 +1,25 @@
+
+public class RateStrategyTestImpl implements RateStrategyTest {
+
+	private String dayOfTheWeek;
+    private int moneyInserted = 0;
+    private int time = 0;
+    private String[] WeekDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+    private String[] Weekend = {"Saturday", "Sunday"};
+	
+	@Override
+	public int calculateTimeLinearRateStrategyTest(int moneyInserted) {
+		return 0;
+	}
+
+	@Override
+	public int calculateTimeProgressiveRateStrategyTest(int moneyInserted) {
+		return 0;
+	}
+
+	@Override
+	public int calculateTimeAlternatingRateStrategyTest(int moneyInserted) {
+		return 0;
+	}
+
+}

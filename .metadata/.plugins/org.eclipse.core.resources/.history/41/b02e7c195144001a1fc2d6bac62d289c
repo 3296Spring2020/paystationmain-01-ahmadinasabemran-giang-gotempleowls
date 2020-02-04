@@ -1,0 +1,10 @@
+
+public interface RateStrategyTest {
+	
+	public int calculateTimeLinearRateStrategyTest(int moneyInserted);
+
+    public int calculateTimeProgressiveRateStrategyTest(int moneyInserted);
+
+    public int calculateTimeAlternatingRateStrategyTest(int moneyInserted);
+	
+}
