@@ -6,7 +6,7 @@ public interface PayStation {
 
     public int readDisplay();
 
-    public Receipt buy();
+    public PayStationImpl.Receipt buy();
 
     public Map<Integer, Integer> cancel();
 

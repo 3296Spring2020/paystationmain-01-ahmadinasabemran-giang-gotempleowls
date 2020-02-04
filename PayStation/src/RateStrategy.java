@@ -1,9 +1,9 @@
 public interface RateStrategy {
 
-    public int calculateTimeLinearRateStrategy(int moneyInserted);
+    public double calculateTimeLinearRateStrategy(double moneyInserted);
 
-    public int calculateTimeProgressiveRateStrategy(int moneyInserted);
+    public double calculateTimeProgressiveRateStrategy(double moneyInserted);
 
-    public int calculateTimeAlternatingRateStrategy(int moneyInserted);
+    public double calculateTimeAlternatingRateStrategy(String dayOfTheWeek, double moneyInserted);
 
 }

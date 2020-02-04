@@ -1,14 +1,16 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class PayStationImpl implements PayStation {
+public class PayStationImpl implements PayStation, RateStrategy {
 
     private int insertedSoFar;
     private int timeBought;
-    private Map coinMap = new HashMap();
+    private Map<Integer, Integer> coinMap = new HashMap<Integer, Integer>();
     private boolean nickleBool = false;
     private boolean dimeBool = false;
     private boolean quarterBool = false;
+    private String[] WeekDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+    private String[] Weekend = {"Saturday", "Sunday"};
 
     @Override
     public void addPayment(int coinValue) throws IllegalCoinException {
@@ -65,12 +67,30 @@ public class PayStationImpl implements PayStation {
     public int readDisplay() {
 
         return timeBought;
+
+    }
+
+    public static class Receipt {
+
+        private int value;
+
+        public Receipt(int value) {
+
+            this.value = value;
+
+        }
+
+        public int value() {
+
+            return value;
+
+        }
     }
 
     @Override
     public Receipt buy() {
 
-        Receipt r = new ReceiptImpl(timeBought);
+        Receipt r = new Receipt(timeBought);
         reset();
         return r;
 
@@ -79,25 +99,94 @@ public class PayStationImpl implements PayStation {
     @Override
     public Map<Integer, Integer> cancel() {
 
-        Map tempMap =  new HashMap();
-        tempMap.putAll(coinMap);
+        Map<Integer, Integer> tempMap = new HashMap<Integer, Integer>(coinMap);
         reset();
         return tempMap;
 
     }
 
     private void reset() {
+
         timeBought = insertedSoFar = 0;
         nickleBool = false;
         dimeBool = false;
         quarterBool = false;
         coinMap.clear();
+
     }
 
     @Override
     public int empty() {
+
         int total = insertedSoFar;
         insertedSoFar = 0;
         return total;
+
+    }
+
+    // Rate Strategies: Linear Rate Strategy, Progressive Rate Strategy, Alternating Rate Strategy
+    // Implemented From The RateStrategy Interface
+
+    @Override
+    // Linear Rate Strategy
+    // Implemented From The Rate Strategy Interface
+    public double calculateTimeLinearRateStrategy(double moneyInserted) {
+
+        double time;
+        time = (moneyInserted * 2.0) / 5.0;
+        return time;
+
+    }
+
+    @Override
+    // Progressive Rate Strategy
+    // Implemented From The Rate Strategy Interface
+    public double calculateTimeProgressiveRateStrategy(double moneyInserted) {
+
+        double time = 0.0;
+
+        if(moneyInserted < 150.0) {
+            time = ((moneyInserted * 2.0) / 5.0);
+        }
+        if((150.0 <= moneyInserted) && (moneyInserted < 350.0)) {
+            time = (((moneyInserted - 150.0) * (3.0 / 10.0)) + 60.0);
+        }
+        if(moneyInserted >= 350.0) {
+            time = (((moneyInserted - 350.0) / 5.0) + 120.0);
+        }
+
+        return time;
+
+    }
+
+    @Override
+    // Alternating Rate Strategy
+    // Implemented From The Rate Strategy Interface
+    public double calculateTimeAlternatingRateStrategy(String dayOfTheWeek, double moneyInserted) {
+
+        double time = 0.0;
+
+        for (String weekDay : WeekDays)
+            if (weekDay.equals(dayOfTheWeek)) {
+                time = ((moneyInserted * 2.0) / 5.0);
+                break;
+            }
+
+        for (String weekend : Weekend) {
+            if (weekend.equals(dayOfTheWeek)) {
+                if (moneyInserted < 150.0) {
+                    time = ((moneyInserted * 2.0) / 5.0);
+                }
+                if ((150.0 <= moneyInserted) && (moneyInserted < 350.0)) {
+                    time = (((moneyInserted - 150.0) * (3.0 / 10.0)) + 60.0);
+                }
+                if (moneyInserted >= 350.0) {
+                    time = (((moneyInserted - 350.0) / 5.0) + 120.0);
+                }
+            }
+        }
+
+        return time;
+
     }
 }
