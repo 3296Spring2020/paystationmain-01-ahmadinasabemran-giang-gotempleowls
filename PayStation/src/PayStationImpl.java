@@ -70,27 +70,10 @@ public class PayStationImpl implements PayStation, RateStrategy {
 
     }
 
-    public static class Receipt {
-
-        private int value;
-
-        public Receipt(int value) {
-
-            this.value = value;
-
-        }
-
-        public int value() {
-
-            return value;
-
-        }
-    }
-
     @Override
-    public Receipt buy() {
+    public ReceiptImpl buy() {
 
-        Receipt r = new Receipt(timeBought);
+        ReceiptImpl r = new ReceiptImpl(timeBought);
         reset();
         return r;
 
