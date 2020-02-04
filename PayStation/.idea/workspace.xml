@@ -66,26 +66,34 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="539" y="138" key="#com.intellij.ide.util.MemberChooser" timestamp="1580498275857">
+    <state x="539" y="138" key="#com.intellij.ide.util.MemberChooser" timestamp="1580671507136">
       <screen x="0" y="23" width="1440" height="811" />
     </state>
-    <state x="539" y="138" key="#com.intellij.ide.util.MemberChooser/0.23.1440.811@0.23.1440.811" timestamp="1580498275857" />
-    <state width="1358" height="195" key="GridCell.Tab.0.bottom" timestamp="1580499077283">
+    <state x="539" y="138" key="#com.intellij.ide.util.MemberChooser/0.23.1440.811@0.23.1440.811" timestamp="1580671507136" />
+    <state width="1358" height="195" key="GridCell.Tab.0.bottom" timestamp="1580519194225">
       <screen x="0" y="23" width="1440" height="811" />
     </state>
-    <state width="1358" height="195" key="GridCell.Tab.0.bottom/0.23.1440.811@0.23.1440.811" timestamp="1580499077283" />
-    <state width="1358" height="195" key="GridCell.Tab.0.center" timestamp="1580499077282">
+    <state width="1358" height="195" key="GridCell.Tab.0.bottom/0.23.1440.811@0.23.1440.811" timestamp="1580519194225" />
+    <state width="1358" height="195" key="GridCell.Tab.0.center" timestamp="1580519194224">
       <screen x="0" y="23" width="1440" height="811" />
     </state>
-    <state width="1358" height="195" key="GridCell.Tab.0.center/0.23.1440.811@0.23.1440.811" timestamp="1580499077282" />
-    <state width="1358" height="195" key="GridCell.Tab.0.left" timestamp="1580499077281">
+    <state width="1358" height="195" key="GridCell.Tab.0.center/0.23.1440.811@0.23.1440.811" timestamp="1580519194224" />
+    <state width="1358" height="195" key="GridCell.Tab.0.left" timestamp="1580519194223">
       <screen x="0" y="23" width="1440" height="811" />
     </state>
-    <state width="1358" height="195" key="GridCell.Tab.0.left/0.23.1440.811@0.23.1440.811" timestamp="1580499077281" />
-    <state width="1358" height="195" key="GridCell.Tab.0.right" timestamp="1580499077283">
+    <state width="1358" height="195" key="GridCell.Tab.0.left/0.23.1440.811@0.23.1440.811" timestamp="1580519194223" />
+    <state width="1358" height="195" key="GridCell.Tab.0.right" timestamp="1580519194224">
       <screen x="0" y="23" width="1440" height="811" />
     </state>
-    <state width="1358" height="195" key="GridCell.Tab.0.right/0.23.1440.811@0.23.1440.811" timestamp="1580499077283" />
+    <state width="1358" height="195" key="GridCell.Tab.0.right/0.23.1440.811@0.23.1440.811" timestamp="1580519194224" />
+    <state x="378" y="252" key="com.intellij.ide.util.TipDialog" timestamp="1580672046036">
+      <screen x="0" y="23" width="1440" height="811" />
+    </state>
+    <state x="378" y="252" key="com.intellij.ide.util.TipDialog/0.23.1440.811@0.23.1440.811" timestamp="1580672046036" />
+    <state x="388" y="106" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1580686023640">
+      <screen x="0" y="23" width="1440" height="811" />
+    </state>
+    <state x="388" y="106" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1440.811@0.23.1440.811" timestamp="1580686023640" />
     <state x="505" y="162" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1580498579557">
       <screen x="0" y="23" width="1440" height="811" />
     </state>
