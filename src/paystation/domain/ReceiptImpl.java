@@ -10,6 +10,7 @@
  * implied. You may study, use, modify, and distribute it for non-commercial
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
+
 package paystation.domain;
 
 public class ReceiptImpl implements Receipt {
@@ -17,11 +18,14 @@ public class ReceiptImpl implements Receipt {
     private int value;
 
     public ReceiptImpl(int value) {
+
         this.value = value;
+
     }
 
     @Override
     public int value() {
         return value;
     }
+
 }
