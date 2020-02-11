@@ -24,14 +24,10 @@ import java.util.*;
 public class Main {
 
     
-    private static PayStationImpl ps;
+    public static PayStationImpl ps;
+    public static int currentRate = 1;
     
-    //int related to the RateStrategy being used, default is 1 for Linear
-    //Depending on the value here, use a different timeCalculate method
-    //Can be edited through changeRateStrategy()
-    private int currentRate = 1;
-    
-    public void setup(){
+    public static void setup(){
         ps = new PayStationImpl();
     }
     
@@ -39,20 +35,22 @@ public class Main {
     //Can accept 5, 10, 25 coins
     public static void depositCoins() throws IllegalCoinException{
         
-        Scanner kbd = new Scanner(System.in);
-        System.out.println("This machine accepts nickels, dimes, and quarters."
+        Scanner input = new Scanner(System.in);
+        System.out.println("This machine accepts nickels, dimes, and quarters.\n"
                 + "Please input the integer value of the coin "
                 + "you would like to enter: ");
         
-        int coin = kbd.nextInt();
+        int coin = input.nextInt();
         ps.addPayment(coin);
-        kbd.close();
+        System.out.println(coin + " cents added.");
+        System.out.println("New total is " + ps.getInsertedSoFar() + " cents.");
+        
     }
     
     //Displays the current amount of time bought
     public static int display(){
         int timeBought = ps.readDisplay();
-        System.out.println(timeBought + " minutes bought");
+        System.out.println(timeBought + " minutes bought.");
         return timeBought;
     }
     
@@ -61,7 +59,7 @@ public class Main {
     public static void buyTicket(){
         //Receipt has a single value for timeBought
         Receipt r = ps.buy();
-        System.out.println("Receipt: " + r.value());
+        System.out.println("Receipt: " + r.value() + " minutes bought.");
     }
     
     //Calls the corresponding method in PayStationImpl
@@ -69,13 +67,23 @@ public class Main {
     //Prints number of each coin
     public static void cancel(){
         //Hold is a copy of the PayStation coinMap
-        //Maps from coin type to number of coins
+        //Maps from coin type (1, 2, 3) to number of coins
         Map<Integer,Integer> hold = ps.cancel();
+        int nickels = 0;
+        int dimes = 0;
+        int quarters = 0;
         
         //Count for each coin type
-        int nickels = hold.get(5);
-        int dimes = hold.get(10);
-        int quarters = hold.get(25);
+        //Try to copy values from coinMap
+        //If coinMap does not have a value mapped, default to 0
+        try{nickels = hold.get(1);} 
+        catch(Exception e){}
+        
+        try{dimes = hold.get(2);}
+        catch(Exception e){}
+        
+        try{quarters = hold.get(3);}
+            catch(Exception e){}
         
         //Total coin value of everything in the map
         int totalRet = (nickels * 5) + (dimes * 10) + (quarters * 25);
@@ -93,30 +101,47 @@ public class Main {
         //Get user input for new rate strategy
         Scanner kbd = new Scanner(System.in);
         int user_input;
-        System.out.println("Please enter an integer corresponding"
+        System.out.println("\nPlease enter an integer corresponding"
                 + "to the desired rate strategy\n"
                 + "1. Linear Rate - Alphatown\n"
                 + "2. Progressive Rate - Betatown\n"
                 + "3. Alternating Rate - Gammatown");
+        
         user_input = kbd.nextInt();
+        
         if(user_input >= 1 && user_input <= 3){
             ps.changeRate(user_input);
+            currentRate = user_input;
+            System.out.println("Successfully changed.");
+            return currentRate;
         } else {
             System.out.println("Invalid input. Returning to menu.");
         }
         
-        kbd.close();
         return -1;
     }
     
-    
     public static void main(String[] args) throws IllegalCoinException{
         
+        setup();
         Scanner kbd = new Scanner(System.in);
         int user_input = -1;
         
         //Simulation stops when Cancel or Buy are ran
         while (user_input != 3 && user_input != 4) {
+            
+            //Display the current town name
+            switch(currentRate){
+                case 1: 
+                    System.out.println("|| Alphatown ||");
+                    break;
+                case 2:
+                    System.out.println("|| Betatown ||");
+                    break;
+                case 3:
+                    System.out.println("|| Gammatown ||");
+                    break;
+            }
             
             //Allow the user to select a function:
             //Deposit Coins
@@ -132,6 +157,7 @@ public class Main {
                     + "5. Change Rate Strategy");
 
             //Get user input
+            user_input = kbd.nextInt();
             if (user_input >= 1 && user_input <= 5) {
                 //Use a switch to run different options based on the user's answer
                 switch(user_input){
@@ -156,8 +182,9 @@ public class Main {
                 System.out.println("Invalid input ");
             }
             //Here, exits loop if 3. buyTicket() or 4. cancel() were entered
-            
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
+        System.out.println("Exiting program.");
         kbd.close();
     }
 }

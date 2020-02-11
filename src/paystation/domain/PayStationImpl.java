@@ -16,14 +16,14 @@ public class PayStationImpl implements PayStation {
     //Depending on the value here, use a different timeCalculate method
     private int currentRate = 1;
     
-    private static RateStrategyImpl rs;
+    public static RateStrategyImpl rs;
     public void setup(){
         rs = new RateStrategyImpl();
     }
     
     @Override
     public void addPayment(int coinValue) throws IllegalCoinException {
-
+        setup();
         switch (coinValue) {
             case 5:
                 if(!nickleBool)
@@ -84,12 +84,29 @@ public class PayStationImpl implements PayStation {
     }
     
     @Override
+    public int getInsertedSoFar(){
+        return insertedSoFar;
+    }
+    
+    @Override
     public int changeRate(int rate){
-        
+        setup();
         //Changes the value of currentRate if rate is a valid value
         //If rate is not a valid value, return -1
         if(rate >= 1 && rate <= 3){
             currentRate = rate;
+            //After changing the rate, also change the value for timeBought
+            switch(currentRate){
+            case 1: //Linear rate strategy, Alphatown
+                timeBought = rs.calculateTimeLinear(insertedSoFar);
+                break;
+            case 2: //Progressive rate strategy, Betatown
+                timeBought = rs.calculateTimeProgressive(insertedSoFar);
+                break;
+            case 3: //Alternating rate strategy, Gammatown
+                timeBought = rs.calculateTimeAlternating(insertedSoFar);
+                break;
+            }
             return rate;
         }
         return -1;
