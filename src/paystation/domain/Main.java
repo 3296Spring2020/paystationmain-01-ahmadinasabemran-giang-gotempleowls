@@ -117,7 +117,6 @@ public class Main {
         } else {
             System.out.println("Invalid input. Returning to menu.");
         }
-        
         return -1;
     }
     
